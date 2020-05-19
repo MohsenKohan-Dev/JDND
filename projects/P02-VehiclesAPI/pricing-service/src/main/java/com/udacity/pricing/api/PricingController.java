@@ -31,6 +31,5 @@ public class PricingController {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Price Not Found", ex);
         }
-
     }
 }
