@@ -1,0 +1,23 @@
+CREATE TABLE product (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description VARCHAR(1000) NOT NULL
+);
+
+CREATE TABLE review (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    review_text VARCHAR(10000) NULL,
+    created_ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    recommended TINYINT(1) NULL,
+    product_id INT NOT NULL
+);
+
+
+CREATE TABLE comment (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    comment_text VARCHAR(10000) NULL,
+    created_ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    review_id INT NOT NULL
+);
