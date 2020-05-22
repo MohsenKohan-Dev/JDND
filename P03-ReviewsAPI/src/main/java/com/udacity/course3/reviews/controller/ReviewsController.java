@@ -1,9 +1,9 @@
 package com.udacity.course3.reviews.controller;
 
-import org.springframework.http.HttpStatus;
+import com.udacity.course3.reviews.entity.Review;
+import com.udacity.course3.reviews.service.PersistenceService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpServerErrorException;
 
 import java.util.List;
 
@@ -11,9 +11,14 @@ import java.util.List;
  * Spring REST controller for working with review entity.
  */
 @RestController
+@RequestMapping("/reviews/products")
 public class ReviewsController {
 
-    // TODO: Wire JPA repositories here
+    private final PersistenceService persistenceService;
+
+    public ReviewsController(PersistenceService persistenceService) {
+        this.persistenceService = persistenceService;
+    }
 
     /**
      * Creates a review for a product.
@@ -26,9 +31,11 @@ public class ReviewsController {
      * @param productId The id of the product.
      * @return The created review or 404 if product id is not found.
      */
-    @RequestMapping(value = "/reviews/products/{productId}", method = RequestMethod.POST)
-    public ResponseEntity<?> createReviewForProduct(@PathVariable("productId") Integer productId) {
-        throw new HttpServerErrorException(HttpStatus.NOT_IMPLEMENTED);
+    @PostMapping("/{productId}")
+    public ResponseEntity<Review> createReviewForProduct(@PathVariable("productId") Integer productId,
+                                                         @RequestBody Review review) {
+        return ResponseEntity.ok(
+                persistenceService.insertReviewForProduct(productId, review));
     }
 
     /**
@@ -37,8 +44,8 @@ public class ReviewsController {
      * @param productId The id of the product.
      * @return The list of reviews.
      */
-    @RequestMapping(value = "/reviews/products/{productId}", method = RequestMethod.GET)
-    public ResponseEntity<List<?>> listReviewsForProduct(@PathVariable("productId") Integer productId) {
-        throw new HttpServerErrorException(HttpStatus.NOT_IMPLEMENTED);
+    @GetMapping("/{productId}")
+    public ResponseEntity<List<Review>> listReviewsForProduct(@PathVariable("productId") Integer productId) {
+        return ResponseEntity.ok(persistenceService.findReviewsByProductId(productId));
     }
 }
